@@ -5,8 +5,8 @@ import data from "./data.json";
 export const App = () => {
   const [steps, setSteps] = useState(data);
   const [activeIndex, setActiveIndex] = useState(0);
-  const button = (event) => {
-    setActiveIndex(event.target.textContent - 1)
+  const button = (index) => {
+    setActiveIndex(index)
   };
   const forwardButton = () => {
       setActiveIndex(activeIndex + 1)
@@ -20,8 +20,8 @@ export const App = () => {
     setActiveIndex(0)
   };
   
-  const isFirstStep = activeIndex === 0 ? true : false;
-  const isLastStep = activeIndex === 6 ? true : false;
+  const isFirstStep = activeIndex === 0;
+  const isLastStep = activeIndex === steps.length - 1;
 
   return (
     <div className={styles.container}>
@@ -34,7 +34,7 @@ export const App = () => {
           <ul className={styles.stepsList}>
             {steps.map((item, index) => (
               <li className={`${styles.stepsItem} ${index === activeIndex ? styles.stepsItemActive : styles.stepsItem} ${index < activeIndex ? styles.stepsItemDone : styles.stepsItem}`} key={item.id}>
-                <button className={styles.stepsItemButton} onClick={button}>{item.id.slice(2)}</button>
+                <button className={styles.stepsItemButton} onClick={() => button(index)}>{item.id.slice(2)}</button>
                 {item.title}
               </li>
             ))}
